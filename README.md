@@ -1,92 +1,48 @@
-# Sanghachadwam Foundation
+# 🌱 Sanghachadwam Foundation Website
 
 <div align="center">
-  
-![Sanghachadwam Logo](https://img.shields.io/badge/Sanghachadwam-Foundation-brightgreen?style=for-the-badge)
 
 [![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![SendGrid](https://img.shields.io/badge/SendGrid-1A82E2?style=for-the-badge&logo=sendgrid&logoColor=white)](https://sendgrid.com/)
-[![Google Maps](https://img.shields.io/badge/Google_Maps-4285F4?style=for-the-badge&logo=google-maps&logoColor=white)](https://developers.google.com/maps)
-[![PhonePe](https://img.shields.io/badge/PhonePe-5f259f?style=for-the-badge&logo=phonepe&logoColor=white)](https://phonepe.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](CONTRIBUTING.md)
-  
 </div>
 
-## 🌟 Vision
+<p align="center">
+  <img src="https://via.placeholder.com/800x400?text=Sanghachadwam+Foundation" alt="Sanghachadwam Foundation" width="600" />
+</p>
 
-Transforming agriculture into a first-choice profession by empowering rural youth across Bharat (India). Our mission is to cultivate **1 million agri-preneurs by 2035** through sustainable innovation and economic resilience.
+## 🌟 Overview
+This repository contains the official website for Sanghachadwam Foundation, a non-profit organization dedicated to transforming agriculture into a first-choice profession by empowering rural youth. Our goal is to cultivate 1 million agri-preneurs by 2035 through skill development, entrepreneurship, and agritech innovation, fostering sustainable growth and economic resilience in Bharat.
 
----
+> **Note:** This website is designed as a single-page application (SPA) to provide a seamless, modern user experience with smooth transitions between different sections.
 
-## 📋 Contents
+## 🚀 Tech Stack
+- **Frontend Framework**: [Next.js](https://nextjs.org/) with [React](https://reactjs.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Contact Form**: [SendGrid](https://sendgrid.com/) integration
+- **Maps**: [Google Maps API](https://developers.google.com/maps)
+- **Payment Integration**: [PhonePe](https://www.phonepe.com/)
 
-- [Overview](#-overview)
-- [Key Features](#-key-features)
-- [Technology Stack](#-technology-stack)
-- [Getting Started](#-getting-started)
-- [Environment Setup](#-environment-setup)
-- [Development](#-development)
-- [Deployment](#-deployment)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Contact](#-contact)
+## ✨ Features
+- 📱 Responsive and modern UI
+- 🎯 Information about the foundation's mission, vision, and initiatives
+- 📧 Contact form with SendGrid for email delivery
+- 🗺️ Interactive location map using Google Maps
+- 💳 Donation and payment processing through PhonePe
+- 📝 Blog/News section for updates and articles
+- 📚 Resources for aspiring agri-preneurs
+- 🏆 Success stories showcase
 
----
-
-## 🔍 Overview
-
-The Sanghachadwam Foundation is dedicated to revolutionizing agriculture in India by providing:
-
-- **Skill Development** programs for rural youth
-- **Entrepreneurship** opportunities in the agricultural sector
-- **Agritech Innovation** to modernize farming practices
-- **Sustainable Growth** models for long-term economic resilience
-
-This repository houses the official website showcasing our initiatives, success stories, and resources.
-
----
-
-## ✨ Key Features
-
-- 📱 Responsive, mobile-first modern UI design
-- 🎯 Mission and vision presentation with impact metrics
-- 📞 Contact form with secure SendGrid email integration
-- 🗺️ Interactive location mapping through Google Maps API
-- 💰 Secure donation processing via PhonePe
-- 📰 Dynamic blog and news section
-- 📚 Comprehensive resource library for agri-preneurs
-- 🏆 Success stories gallery with testimonials
-- 🌐 Multilingual support for regional accessibility
-
----
-
-## 💻 Technology Stack
-
-| Category | Technologies |
-|----------|--------------|
-| **Frontend** | Next.js, React, Tailwind CSS |
-| **Communication** | SendGrid |
-| **Geolocation** | Google Maps API |
-| **Payments** | PhonePe Integration |
-| **Deployment** | Vercel/Netlify |
-| **Analytics** | Google Analytics |
-
----
-
-## 🚀 Getting Started
+## 🛠️ Development Setup
 
 ### Prerequisites
-
-- Node.js (v14 or higher)
-- npm or yarn package manager
-- Git
+- [Node.js](https://nodejs.org/) (v14 or higher)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- [Git](https://git-scm.com/)
 
 ### Installation
-
 1. Clone the repository:
    ```bash
    git clone https://github.com/akaashchitragar/sfwebsite.git
@@ -100,39 +56,25 @@ This repository houses the official website showcasing our initiatives, success 
    yarn install
    ```
 
----
+3. Create a `.env.local` file in the root directory with the following variables:
+   ```env
+   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+   SENDGRID_API_KEY=your_sendgrid_api_key
+   PHONEPE_MERCHANT_ID=your_phonepe_merchant_id
+   PHONEPE_API_KEY=your_phonepe_api_key
+   ```
 
-## 🔐 Environment Setup
+4. Run the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-Create a `.env.local` file in the root directory with the following configurations:
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
 
-```env
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
-SENDGRID_API_KEY=your_sendgrid_api_key
-PHONEPE_MERCHANT_ID=your_phonepe_merchant_id
-PHONEPE_API_KEY=your_phonepe_api_key
-NEXT_PUBLIC_GA_MEASUREMENT_ID=your_google_analytics_id
-```
-
----
-
-## 💻 Development
-
-Start the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Visit [http://localhost:3000](http://localhost:3000) in your browser to see the application.
-
----
-
-## 🌐 Deployment
-
-Build the application for production:
+## 🚢 Deployment
+The website can be deployed on [Vercel](https://vercel.com/), [Netlify](https://www.netlify.com/), or any other platform that supports Next.js applications.
 
 ```bash
 npm run build
@@ -140,42 +82,47 @@ npm run build
 yarn build
 ```
 
-The website can be deployed to:
-- [Vercel](https://vercel.com/) (recommended for Next.js)
-- [Netlify](https://www.netlify.com/)
-- Any other platform supporting Next.js applications
-
----
-
 ## 👥 Contributing
-
-We welcome contributions to improve the Sanghachadwam Foundation website. Please follow these steps:
+We welcome contributions to improve the website. Please follow these steps:
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution guidelines.
-
----
+<details>
+<summary>Contribution Guidelines</summary>
+<br>
+- Ensure your code follows the project's coding standards
+- Update documentation as needed
+- Test your changes thoroughly before submitting a PR
+- Be respectful and constructive in discussions
+</details>
 
 ## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 📞 Contact
-
-**Sanghachadwam Foundation**  
-- Website: [www.sanghachadwam.org](https://www.sanghachadwam.org)
-- Email: contact@sanghachadwam.org
-- Address: [Foundation Address]
+<div align="center">
+  <table>
+    <tr>
+      <td>
+        <strong>Sanghachadwam Foundation</strong><br>
+        📧 Email: [contact@sanghachadwam.org]<br>
+        🌐 Website: [https://sanghachadwam.org]<br>
+        📍 Location: [India]
+      </td>
+    </tr>
+  </table>
+</div>
 
 ---
 
 <div align="center">
-  <sub>Built with ❤️ for rural empowerment and agricultural transformation</sub>
+  <p>
+    <strong>Transforming Agriculture, Empowering Rural Youth</strong>
+  </p>
+  
+  Project Link: [https://github.com/akaashchitragar/sfwebsite](https://github.com/akaashchitragar/sfwebsite)
 </div> 
