@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
-import { BookOpen, Users, Home, TrendingUp, ChevronLeft, ChevronRight, MapPin, Quote, Award, Star, BarChart3, TrendingDown } from 'lucide-react';
+import { BookOpen, Users, Home, TrendingUp, ChevronLeft, ChevronRight, MapPin, Quote, Award, Star, BarChart3, TrendingDown, LineChart } from 'lucide-react';
 
 const Impact = () => {
   const sectionRef = useRef(null);
@@ -310,7 +310,7 @@ const Impact = () => {
                 className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-100/80 backdrop-blur-sm text-green-800 text-sm font-medium mb-4 border border-green-200/50"
               >
                 <motion.span variants={iconsAnimation}>
-                  <Award className="w-4 h-4 text-green-600" />
+                  <LineChart className="w-4 h-4 text-green-600" />
                 </motion.span>
                 Our Impact
               </motion.span>

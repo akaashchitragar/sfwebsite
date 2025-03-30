@@ -2,7 +2,7 @@
 
 import { useState, FormEvent, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Check, ArrowRight, DollarSign, User, Mail } from 'lucide-react';
+import { Heart, Check, ArrowRight, DollarSign, User, Mail, Gift } from 'lucide-react';
 import Image from 'next/image';
 
 const Donate = () => {
@@ -121,7 +121,7 @@ const Donate = () => {
                     repeatType: "reverse"
                   }}
                 >
-                  <Heart className="w-10 h-10 text-white/90 mx-auto" />
+                  <Gift className="w-10 h-10 text-white/90 mx-auto" />
                 </motion.div>
                 <h2 className="text-3xl font-bold text-white">Support Our Mission</h2>
                 <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white to-transparent mx-auto my-4 opacity-60"></div>
@@ -132,7 +132,7 @@ const Donate = () => {
             ) : (
               <div>
                 <div className="inline-block p-3 rounded-full bg-white/10 backdrop-blur-sm mb-4">
-                  <Heart className="w-10 h-10 text-white/90 mx-auto" />
+                  <Gift className="w-10 h-10 text-white/90 mx-auto" />
                 </div>
                 <h2 className="text-3xl font-bold text-white">Support Our Mission</h2>
                 <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white to-transparent mx-auto my-4 opacity-60"></div>

@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { BookOpen, Lightbulb, Cpu, Home, ArrowRight, Check, Smartphone, Leaf, CloudCog, Brain, Award, ChevronRight, Star, BadgeCheck, Heart } from 'lucide-react';
+import { BookOpen, Lightbulb, Cpu, Home, ArrowRight, Check, Smartphone, Leaf, CloudCog, Brain, Award, ChevronRight, Star, BadgeCheck, Heart, Boxes } from 'lucide-react';
 
 const Programs = () => {
   const [activeTab, setActiveTab] = useState(1);
@@ -343,7 +343,7 @@ const Programs = () => {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-100/80 backdrop-blur-sm text-green-800 text-sm font-medium mb-4 border border-green-200/50"
           >
             <motion.span variants={iconsAnimation}>
-              <Award className="w-4 h-4 text-green-600" />
+              <Boxes className="w-4 h-4 text-green-600" />
             </motion.span>
             Our Programs
           </motion.span>

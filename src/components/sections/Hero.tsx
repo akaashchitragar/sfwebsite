@@ -80,7 +80,7 @@ const Hero = () => {
       setCurrentSlide((prev) => (prev + 1) % backgroundImages.length);
       setSlideProgress(0);
       setIsTransitioning(false);
-    }, 500);
+    }, 700);
   }, [isTransitioning, backgroundImages.length]);
 
   // Navigate to previous slide
@@ -91,7 +91,7 @@ const Hero = () => {
       setCurrentSlide((prev) => (prev === 0 ? backgroundImages.length - 1 : prev - 1));
       setSlideProgress(0);
       setIsTransitioning(false);
-    }, 500);
+    }, 700);
   }, [isTransitioning, backgroundImages.length]);
 
   // Touch handlers for mobile swipe
@@ -156,11 +156,12 @@ const Hero = () => {
 
   // Animation variants
   const slideVariants = {
-    enter: { opacity: 0, scale: 1.05, x: 50 },
+    enter: { opacity: 0, scale: 1.05, x: 0, y: 30 },
     center: { 
       opacity: 1, 
       scale: 1,
       x: 0,
+      y: 0,
       transition: { 
         duration: 1.2, 
         ease: [0.32, 0.72, 0, 1],
@@ -171,7 +172,8 @@ const Hero = () => {
     exit: { 
       opacity: 0, 
       scale: 0.95,
-      x: -50,
+      x: 0,
+      y: -30,
       transition: { 
         duration: 0.7,
         ease: [0.32, 0.72, 0, 1]
@@ -180,20 +182,22 @@ const Hero = () => {
   };
 
   const textVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 20, filter: "blur(5px)" },
     visible: (custom: number) => ({
       opacity: 1,
       y: 0,
+      filter: "blur(0px)",
       transition: { 
         duration: 0.8, 
-        delay: custom * 0.15, 
+        delay: custom * 0.2, 
         ease: [0.22, 1, 0.36, 1] 
       }
     }),
     exit: { 
       opacity: 0, 
-      y: -10, 
-      transition: { duration: 0.4 } 
+      y: -20, 
+      filter: "blur(5px)",
+      transition: { duration: 0.5 } 
     }
   };
   
@@ -263,10 +267,10 @@ const Hero = () => {
           <div className="relative w-full h-full">
             <motion.div 
               className="w-full h-full"
-              initial={{ filter: "blur(8px) brightness(0.7)", opacity: 0.8 }}
+              initial={{ filter: "blur(12px) brightness(0.6)", opacity: 0.7 }}
               animate={{ filter: "blur(0px) brightness(1)", opacity: 1 }}
-              exit={{ filter: "blur(8px) brightness(0.7)", opacity: 0.8 }}
-              transition={{ duration: 1.2 }}
+              exit={{ filter: "blur(12px) brightness(0.6)", opacity: 0.7 }}
+              transition={{ duration: 1.4, ease: "easeOut" }}
             >
               <motion.div
                 initial="initial"
@@ -556,7 +560,7 @@ const Hero = () => {
                   setCurrentSlide(index);
                   setSlideProgress(0);
                   setIsTransitioning(false);
-                }, 500);
+                }, 700);
               }
             }}>
               <div className={`group flex flex-col items-center space-y-2 ${index === currentSlide ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}>

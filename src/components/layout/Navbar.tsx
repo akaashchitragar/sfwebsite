@@ -110,14 +110,30 @@ const Navbar = () => {
                 transition={{ duration: 0.5 }}
               >
                 <Link href="/" className="font-bold text-xl text-green-600 font-poppins flex items-center">
-                  <span className="text-gradient bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
+                  <Image 
+                    src="/logo.png" 
+                    alt="Sanghachadwam Logo" 
+                    width={36} 
+                    height={36}
+                    className="mr-2"
+                    priority
+                  />
+                  <span className="text-green-800">
                     Sanghachadwam Foundation
                   </span>
                 </Link>
               </motion.div>
             ) : (
               <Link href="/" className="font-bold text-xl text-green-600 font-poppins flex items-center">
-                <span className="text-gradient bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
+                <Image 
+                  src="/logo.png" 
+                  alt="Sanghachadwam Logo" 
+                  width={36} 
+                  height={36}
+                  className="mr-2"
+                  priority
+                />
+                <span className="text-green-800">
                   Sanghachadwam Foundation
                 </span>
               </Link>

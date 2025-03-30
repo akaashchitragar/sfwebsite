@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Play, Info, Leaf, GraduationCap, LightbulbIcon, FlaskConical, X, Award, Heart, Clock, TrendingUp } from 'lucide-react';
+import { Play, Info, Leaf, GraduationCap, LightbulbIcon, FlaskConical, X, Award, Heart, Clock, TrendingUp, Building } from 'lucide-react';
+import SectionBadge from '../ui/SectionBadge';
 
 // Define a type for tab content
 type TabContent = {
@@ -220,18 +221,7 @@ const About = () => {
             className="space-y-7"
           >
             <div>
-              <motion.span 
-                initial="rest"
-                whileHover="hover"
-                animate="rest"
-                variants={hoverAnimation}
-                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100/80 backdrop-blur-sm text-green-800 text-xs font-medium tracking-wider shadow-sm border border-green-200/50"
-              >
-                <motion.span variants={iconAnimation} className="flex items-center justify-center">
-                  <Award className="w-3.5 h-3.5 text-green-600" />
-                </motion.span>
-                About Us
-              </motion.span>
+              <SectionBadge icon={Building} text="About Us" />
               <h2 className="mt-2 text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
                 Transforming Agriculture <span className="text-green-600">in Bharat</span>
               </h2>

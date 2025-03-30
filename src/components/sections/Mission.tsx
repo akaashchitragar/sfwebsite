@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { Leaf, Goal, Users, GraduationCap, ChevronDown, Award, Heart, Zap, Shield, BarChart3 } from 'lucide-react';
+import { Leaf, Goal, Users, GraduationCap, ChevronDown, Award, Heart, Zap, Shield, BarChart3, Flag, Target } from 'lucide-react';
 
 const Mission = () => {
   const sectionRef = useRef(null);
@@ -214,7 +214,7 @@ const Mission = () => {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-100/80 backdrop-blur-sm text-green-800 text-sm font-medium mb-4 border border-green-200/50"
           >
             <motion.span variants={iconsAnimation}>
-              <Award className="w-4 h-4 text-green-600" />
+              <Target className="w-4 h-4 text-green-600" />
             </motion.span>
             Our Mission
           </motion.span>
