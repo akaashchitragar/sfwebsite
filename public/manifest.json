@@ -1,0 +1,21 @@
+{
+  "name": "Sanghachadwam Foundation",
+  "short_name": "Sanghachadwam",
+  "description": "Transforming agriculture into a first-choice profession, empowering rural youth to become agri-preneurs.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#16a34a",
+  "icons": [
+    {
+      "src": "/favicon/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/favicon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ]
+} 
