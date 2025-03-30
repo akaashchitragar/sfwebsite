@@ -11,10 +11,15 @@ module.exports = {
         marquee: {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' }
+        },
+        progressBar: {
+          '0%': { width: '0%' },
+          '100%': { width: '100%' }
         }
       },
       animation: {
-        marquee: 'marquee 30s linear infinite'
+        marquee: 'marquee 30s linear infinite',
+        progressBar: 'progressBar 2s ease-in-out'
       }
     },
   },

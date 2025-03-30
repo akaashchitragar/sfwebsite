@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { Sparkles, ExternalLink, Rocket, X, Leaf, Award, Users, Info } from 'lucide-react';
+import { Sparkles, ExternalLink, Rocket, X, Leaf, Award, Users, Info, ArrowRight } from 'lucide-react';
 
 // Define a more detailed startup interface
 interface Startup {
@@ -19,10 +19,8 @@ interface Startup {
 
 const Startups = () => {
   const [isMounted, setIsMounted] = useState(false);
-  const [activeStartup, setActiveStartup] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedStartup, setSelectedStartup] = useState<Startup | null>(null);
-  const [filter, setFilter] = useState<string | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   
   // Client-side only effect
@@ -118,17 +116,6 @@ const Startups = () => {
       teamSize: '15-25'
     }
   ];
-
-  // Get unique categories for filtering
-  const categories = Array.from(new Set(startups.map(startup => startup.category)));
-  
-  // Filter startups based on selected category
-  const filteredStartups = filter 
-    ? startups.filter(startup => startup.category === filter) 
-    : startups;
-  
-  // Hexagon SVG path
-  const hexagonPath = "M50,0 L93.3,25 L93.3,75 L50,100 L6.7,75 L6.7,25 Z";
   
   // Variants for animations
   const containerVariants = {
@@ -183,23 +170,34 @@ const Startups = () => {
     setShowModal(true);
   };
   
+  // Static startup card for SSR
   const staticStartupItem = (startup: Startup, index: number) => (
-    <div
-      key={`static-${startup.id}`}
-      className="flex-shrink-0 relative bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden"
-      style={{ height: "160px", clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
-    >
-      <div className="absolute inset-2 flex items-center justify-center">
-        <Image
-          src={startup.logo}
-          alt={startup.name}
-          fill
-          className="object-contain p-4"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.src = '/images/placeholder-logo.jpg';
-          }}
-        />
+    <div key={`static-${startup.id}`} className="flex-shrink-0 w-full max-w-xs">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden h-full transform transition-all hover:shadow-md">
+        <div className="p-6 flex flex-col h-full">
+          <div className="mb-4 flex justify-between items-start">
+            <div className="w-20 h-20 relative bg-white rounded-lg shadow-sm overflow-hidden flex-shrink-0">
+              <div className="absolute inset-1 bg-white flex items-center justify-center">
+                <Image
+                  src={startup.logo}
+                  alt={startup.name}
+                  fill
+                  className="object-contain p-1"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = '/images/placeholder-logo.jpg';
+                  }}
+                />
+              </div>
+            </div>
+            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-100">
+              {startup.category}
+            </span>
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">{startup.name}</h3>
+          <p className="text-sm text-gray-600 mb-4 flex-grow">{startup.description}</p>
+          <div className="text-xs text-gray-500">Est. {startup.foundedYear}</div>
+        </div>
       </div>
     </div>
   );
@@ -208,7 +206,7 @@ const Startups = () => {
     <section className="py-24 relative overflow-hidden bg-gradient-to-b from-gray-50 to-white">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Subtle honeycomb pattern */}
+        {/* Honeycomb pattern background */}
         <div className="absolute inset-0 opacity-5" 
           style={{
             backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 43.3'%3E%3Cpath fill='%2316a34a' d='M25,0 L50,14.4 L50,43.3 L25,57.7 L0,43.3 L0,14.4 Z' opacity='0.5'/%3E%3C/svg%3E\")",
@@ -216,14 +214,15 @@ const Startups = () => {
           }}>
         </div>
         
-        {/* Gradient orbs */}
+        {/* Gradient elements */}
         <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-gradient-radial from-green-100/30 to-transparent opacity-70 blur-[120px] transform rotate-12"></div>
         <div className="absolute bottom-0 left-1/4 w-1/3 h-1/2 bg-gradient-radial from-green-200/20 to-transparent opacity-60 blur-[150px] transform -rotate-12"></div>
       </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section header */}
         <motion.div 
-          className="text-center mb-20"
+          className="text-center mb-16 md:mb-20"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -238,7 +237,7 @@ const Startups = () => {
             Innovation Network
           </motion.span>
           
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-6">
             Nurturing <span className="text-green-600 relative inline-block">
               Tomorrow's
               <motion.span 
@@ -251,158 +250,95 @@ const Startups = () => {
             </span> Agri-Startups
           </h2>
           
-          <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
             We're building an ecosystem of innovative agribusiness startups that are revolutionizing 
             farming practices and creating sustainable solutions for rural economies.
           </p>
         </motion.div>
         
-        {/* Category Filter */}
-        {isMounted && (
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
-            <motion.button
-              onClick={() => setFilter(null)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors border ${
-                filter === null 
-                  ? 'bg-green-100 border-green-300 text-green-800' 
-                  : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
-              }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              All
-            </motion.button>
-            
-            {categories.map((category, index) => (
-              <motion.button
-                key={`category-${index}`}
-                onClick={() => setFilter(category)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors border ${
-                  filter === category 
-                    ? 'bg-green-100 border-green-300 text-green-800' 
-                    : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {category}
-              </motion.button>
-            ))}
-          </div>
-        )}
-        
-        {/* Innovative hexagon grid layout */}
+        {/* Startup grid - reimagined as modern cards instead of hexagons */}
         <div className="max-w-6xl mx-auto">
           {isMounted ? (
             <motion.div 
-              className="flex flex-col items-center space-y-14 md:space-y-20"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
             >
-              {/* Grid layout - responsive with different rows based on screen size */}
-              <div className="flex flex-wrap justify-center gap-8 sm:gap-12 md:gap-16 lg:gap-24">
-                {filteredStartups.map((startup, index) => (
-                  <motion.div
-                    key={`${startup.id}`}
-                    className="relative flex flex-col items-center"
-                    variants={itemVariants}
-                    whileHover="hover"
-                    onMouseEnter={() => setActiveStartup(startup.id)}
-                    onMouseLeave={() => setActiveStartup(null)}
-                    onClick={() => openStartupModal(startup)}
-                  >
-                    {/* Hexagon container - responsive sizing */}
-                    <div className="relative h-40 w-40 sm:h-48 sm:w-48 mb-4 group cursor-pointer">
-                      {/* Badge for indicating category */}
-                      <div className="absolute -top-2 -right-2 z-20 px-2 py-1 bg-green-50 border border-green-200 rounded-full text-[10px] font-medium text-green-700 shadow-sm">
-                        {startup.category}
-                      </div>
-                      
-                      {/* Shadow and glow effects */}
-                      <div 
-                        className="absolute top-0 left-0 w-full h-full transform scale-95 opacity-30 blur-md transition-all duration-300 group-hover:scale-110 group-hover:opacity-50"
-                        style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-br from-green-400 to-green-600"></div>
-                      </div>
-                      
-                      {/* Main hexagon */}
-                      <div 
-                        className="absolute top-0 left-0 w-full h-full bg-white border border-gray-200 overflow-hidden transition-all duration-300 transform group-hover:scale-105 group-hover:shadow-xl group-hover:border-green-200 z-10"
-                        style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
-                      >
+              {startups.map((startup, index) => (
+                <motion.div
+                  key={startup.id}
+                  className="flex"
+                  variants={itemVariants}
+                  whileHover="hover"
+                  onClick={() => openStartupModal(startup)}
+                >
+                  <div className="w-full bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden transition-all duration-300 cursor-pointer hover:shadow-xl hover:border-green-200 group">
+                    <div className="p-6">
+                      <div className="flex justify-between items-start mb-5">
                         {/* Logo */}
-                        <div className="absolute inset-0 flex items-center justify-center p-8 transition-transform duration-500 group-hover:scale-110">
-                          <Image
-                            src={startup.logo}
-                            alt={startup.name}
-                            fill
-                            className="object-contain p-4"
-                            priority={index < 4}
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.src = '/images/placeholder-logo.jpg';
-                            }}
-                          />
-                        </div>
-                        
-                        {/* Hover overlay */}
-                        <div 
-                          className="absolute inset-0 bg-gradient-to-br from-green-600/90 to-green-800/90 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-95"
-                        >
-                          <div className="text-white text-center p-4">
-                            <h3 className="font-bold text-lg mb-2">{startup.name}</h3>
-                            <p className="text-xs text-green-50/90">{startup.description}</p>
-                            <div className="mt-3 flex items-center justify-center gap-1">
-                              <span className="text-[10px] text-white/70">Est. {startup.foundedYear}</span>
-                              <span className="w-1 h-1 bg-white/30 rounded-full"></span>
-                              <Info size={12} className="text-white/70" />
-                            </div>
+                        <div className="w-20 h-20 bg-white rounded-xl shadow-sm border border-gray-50 overflow-hidden relative flex-shrink-0">
+                          <div className="absolute inset-1 bg-white flex items-center justify-center">
+                            <Image
+                              src={startup.logo}
+                              alt={startup.name}
+                              fill
+                              className="object-contain p-1"
+                              priority={index < 4}
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.src = '/images/placeholder-logo.jpg';
+                              }}
+                            />
                           </div>
                         </div>
+                        
+                        {/* Category badge */}
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-100">
+                          {startup.category}
+                        </span>
                       </div>
                       
-                      {/* Pulsing effect when active */}
-                      {activeStartup === startup.id && (
+                      {/* Content */}
+                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
+                        {startup.name}
+                      </h3>
+                      
+                      <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                        {startup.description}
+                      </p>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs text-gray-500">Est. {startup.foundedYear}</span>
+                        
                         <motion.div 
-                          className="absolute inset-0 bg-green-400/20 z-0"
-                          initial={{ scale: 1, opacity: 0.5 }}
-                          animate={{ 
-                            scale: [1, 1.1, 1], 
-                            opacity: [0.5, 0.2, 0.5] 
-                          }}
-                          transition={{ 
-                            duration: 2, 
-                            ease: "easeInOut",
-                            repeat: Infinity
-                          }}
-                          style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
-                        />
-                      )}
+                          className="flex items-center text-green-600 text-sm font-medium"
+                          whileHover={{ x: 3 }}
+                        >
+                          View Details
+                          <ArrowRight size={14} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                        </motion.div>
+                      </div>
+                      
+                      {/* Hover spotlight effect */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                        <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent" />
+                      </div>
                     </div>
-                    
-                    {/* Startup name */}
-                    <h3 className="text-center font-medium text-gray-900">{startup.name}</h3>
-                    
-                    {/* Connecting lines between hexagons (only visible on desktop) */}
-                    {index < filteredStartups.length - 1 && (index + 1) % 3 !== 0 && (
-                      <div className="hidden lg:block absolute top-1/2 -right-16 w-12 h-0.5 bg-gradient-to-r from-green-400 to-transparent transform origin-left scale-0 transition-transform duration-500 group-hover:scale-100"></div>
-                    )}
-                  </motion.div>
-                ))}
-              </div>
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
           ) : (
-            <div className="flex flex-wrap justify-center gap-8 sm:gap-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {startups.map((startup, index) => staticStartupItem(startup, index))}
             </div>
           )}
         </div>
       </div>
       
-      {/* Modal for startup details */}
+      {/* Redesigned modal with a modern look */}
       <AnimatePresence>
         {showModal && selectedStartup && (
           <motion.div 
@@ -413,7 +349,7 @@ const Startups = () => {
           >
             <motion.div 
               ref={modalRef}
-              className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative"
+              className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden relative"
               variants={modalVariants}
               initial="hidden"
               animate="visible"
@@ -422,82 +358,92 @@ const Startups = () => {
               {/* Close button */}
               <button 
                 onClick={() => setShowModal(false)}
-                className="absolute top-4 right-4 z-10 p-1 rounded-full bg-white/80 text-gray-700 hover:bg-gray-100"
+                className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/90 text-gray-700 hover:bg-gray-100 shadow-md"
               >
-                <X size={20} />
+                <X size={18} />
               </button>
               
-              {/* Modal header with gradient and info */}
-              <div className="p-8 bg-gradient-to-b from-green-100 to-white border-b border-gray-100 relative">
+              {/* Modal header with gradient */}
+              <div className="bg-gradient-to-r from-green-50 to-green-100/50 border-b border-green-100/50 pt-10 pb-8 px-8">
                 <div className="flex items-center gap-6">
                   {/* Logo */}
-                  <div 
-                    className="h-24 w-24 bg-white shadow-md rounded-xl overflow-hidden border border-gray-200 flex-shrink-0 relative"
-                  >
-                    <Image
-                      src={selectedStartup.logo}
-                      alt={selectedStartup.name}
-                      fill
-                      className="object-contain p-2"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = '/images/placeholder-logo.jpg';
-                      }}
-                    />
+                  <div className="w-28 h-28 md:w-32 md:h-32 bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden relative p-2 flex-shrink-0">
+                    <div className="absolute inset-1 bg-white flex items-center justify-center">
+                      <Image
+                        src={selectedStartup.logo}
+                        alt={selectedStartup.name}
+                        fill
+                        className="object-contain p-1"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = '/images/placeholder-logo.jpg';
+                        }}
+                      />
+                    </div>
                   </div>
                   
                   <div className="flex-1">
-                    {/* Category tag */}
-                    <span className="inline-block px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-medium mb-2">
+                    {/* Category badge */}
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 mb-2">
                       {selectedStartup.category}
                     </span>
                     
-                    <h2 className="text-2xl font-bold text-gray-900">{selectedStartup.name}</h2>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-1">{selectedStartup.name}</h2>
                     
-                    <p className="text-green-700 font-medium mt-1">Est. {selectedStartup.foundedYear}</p>
+                    <p className="text-green-700 font-medium text-sm flex items-center">
+                      <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                      Est. {selectedStartup.foundedYear}
+                    </p>
                   </div>
                 </div>
               </div>
               
               {/* Modal content */}
-              <div className="p-6">
+              <div className="p-8">
                 {/* Description */}
-                <div className="mb-6">
-                  <h3 className="text-sm uppercase text-gray-500 font-semibold mb-2">About</h3>
-                  <p className="text-gray-700">{selectedStartup.description}</p>
+                <div className="mb-8">
+                  <h3 className="text-sm uppercase text-gray-500 font-semibold mb-3 flex items-center">
+                    <Info size={14} className="mr-2 text-green-500" />
+                    About
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed">{selectedStartup.description}</p>
                 </div>
                 
-                {/* Stats and details */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                {/* Stats in a modern card layout */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                   {/* Impact */}
-                  <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Leaf size={18} className="text-green-500" />
-                      <h4 className="font-medium text-gray-900">Impact</h4>
+                  <div className="bg-green-50/50 p-5 rounded-xl border border-green-100/80">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="p-2 bg-white rounded-full">
+                        <Leaf size={18} className="text-green-500" />
+                      </div>
+                      <h4 className="font-semibold text-gray-900">Impact</h4>
                     </div>
-                    <p className="text-sm text-gray-600">{selectedStartup.impact}</p>
+                    <p className="text-gray-700">{selectedStartup.impact}</p>
                   </div>
                   
                   {/* Team size */}
-                  <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Users size={18} className="text-green-500" />
-                      <h4 className="font-medium text-gray-900">Team Size</h4>
+                  <div className="bg-green-50/50 p-5 rounded-xl border border-green-100/80">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="p-2 bg-white rounded-full">
+                        <Users size={18} className="text-green-500" />
+                      </div>
+                      <h4 className="font-semibold text-gray-900">Team Size</h4>
                     </div>
-                    <p className="text-sm text-gray-600">{selectedStartup.teamSize} members</p>
+                    <p className="text-gray-700">{selectedStartup.teamSize} members</p>
                   </div>
                 </div>
                 
-                {/* Contact CTA */}
-                <div className="mt-8">
-                  <button
-                    className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
-                    onClick={() => setShowModal(false)}
-                  >
-                    <Sparkles size={16} />
-                    Contact for Collaboration
-                  </button>
-                </div>
+                {/* CTA button */}
+                <motion.button
+                  className="w-full py-3 px-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-medium rounded-xl shadow-md transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-lg"
+                  onClick={() => setShowModal(false)}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Sparkles size={16} />
+                  Connect & Collaborate
+                </motion.button>
               </div>
             </motion.div>
           </motion.div>

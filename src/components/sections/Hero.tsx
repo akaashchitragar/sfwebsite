@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, Leaf, ArrowUpRight, ChevronLeft, Star, ExternalLink } from 'lucide-react';
+import { useLoading } from '@/context/LoadingContext';
 
 const Hero = () => {
   // Background images for the slider with enhanced metadata
@@ -34,6 +35,10 @@ const Hero = () => {
       description: "Blending traditional wisdom with modern techniques for food security and prosperity."
     }
   ];
+
+  // Loading state
+  const { isLoading } = useLoading();
+  const [animate, setAnimate] = useState(false);
 
   // Refs and states
   const heroRef = useRef<HTMLElement>(null);
@@ -71,6 +76,18 @@ const Hero = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Wait for preloader to complete before starting animations
+  useEffect(() => {
+    if (!isLoading) {
+      // Small delay to ensure smooth transition from preloader
+      const timer = setTimeout(() => {
+        setAnimate(true);
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading]);
 
   // Navigate to next slide with enhanced transitions
   const nextSlide = useCallback(() => {
@@ -247,142 +264,147 @@ const Hero = () => {
       onTouchEnd={handleTouchEnd}
     >
       {/* Slide counter indicator */}
-      <div className="absolute top-8 left-8 z-40 flex items-center space-x-2 bg-black/20 backdrop-blur-md py-1.5 px-3 rounded-full border border-white/10">
-        <span className="text-white/90 font-medium text-sm">
-          {currentSlide + 1}/{backgroundImages.length}
-        </span>
-      </div>
+      {animate && (
+        <div className="absolute top-8 left-8 z-40 flex items-center space-x-2 bg-black/20 backdrop-blur-md py-1.5 px-3 rounded-full border border-white/10">
+          <span className="text-white/90 font-medium text-sm">
+            {currentSlide + 1}/{backgroundImages.length}
+          </span>
+        </div>
+      )}
 
       {/* Background Image Slider with Parallax */}
       <AnimatePresence mode="wait" initial={false}>
-        <motion.div 
-          key={currentSlide}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          variants={slideVariants}
-          className="absolute inset-0 w-full h-full"
-          style={{ pointerEvents: 'none' }}
-        >
-          <div className="relative w-full h-full">
-            <motion.div 
-              className="w-full h-full"
-              initial={{ filter: "blur(12px) brightness(0.6)", opacity: 0.7 }}
-              animate={{ filter: "blur(0px) brightness(1)", opacity: 1 }}
-              exit={{ filter: "blur(12px) brightness(0.6)", opacity: 0.7 }}
-              transition={{ duration: 1.4, ease: "easeOut" }}
-            >
-              <motion.div
-                initial="initial"
-                animate="animate"
-                variants={imageDepthEffect}
+        {animate && (
+          <motion.div 
+            key={currentSlide}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            variants={slideVariants}
+            className="absolute inset-0 w-full h-full"
+            style={{ pointerEvents: 'none' }}
+          >
+            <div className="relative w-full h-full">
+              <motion.div 
                 className="w-full h-full"
+                initial={{ filter: "blur(12px) brightness(0.6)", opacity: 0.7 }}
+                animate={{ filter: "blur(0px) brightness(1)", opacity: 1 }}
+                exit={{ filter: "blur(12px) brightness(0.6)", opacity: 0.7 }}
+                transition={{ duration: 1.4, ease: "easeOut" }}
               >
-                <Image
-                  src={backgroundImages[currentSlide].src}
-                  alt={backgroundImages[currentSlide].alt}
-                  fill
-                  priority={true}
-                  className="object-cover object-center"
-                  sizes="100vw"
-                  style={{
-                    transform: `scale(${1 + scrollPosition * 0.0003}) translateY(${scrollPosition * 0.05}px)`
-                  }}
-                />
-              </motion.div>
-            </motion.div>
-            <motion.div 
-              className="absolute inset-0 bg-gradient-to-b from-black/80 via-green-950/70 to-green-900/80 pointer-events-none"
-              initial={{ opacity: 0.5 }}
-              animate={{ opacity: 0.85 }}
-              transition={{ duration: 1 }}
-            ></motion.div>
-            
-            {/* Enhanced abstract shapes overlay with 3D perspective */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ perspective: '1000px' }}>
-              <motion.div 
-                className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-green-500/20 blur-3xl"
-                animate={{ 
-                  scale: [1, 1.05, 1],
-                  opacity: [0.2, 0.3, 0.2],
-                  rotateX: [0, 5, 0],
-                  rotateY: [0, 10, 0]
-                }}
-                transition={{ 
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              ></motion.div>
-              <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-black/40 to-transparent"></div>
-              <motion.div 
-                className="absolute top-1/3 -left-24 w-64 h-64 rounded-full bg-yellow-500/10 blur-3xl"
-                animate={{ 
-                  scale: [1, 1.1, 1],
-                  opacity: [0.1, 0.2, 0.1],
-                  rotateX: [0, -5, 0],
-                  rotateY: [0, -10, 0]
-                }}
-                transition={{ 
-                  duration: 7,
-                  delay: 1,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              ></motion.div>
-              
-              {/* Enhanced particle effect */}
-              <div className="absolute inset-0">
-                {particlesData.map((particle, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute rounded-full bg-white/40"
+                <motion.div
+                  initial="initial"
+                  animate="animate"
+                  variants={imageDepthEffect}
+                  className="w-full h-full"
+                >
+                  <Image
+                    src={backgroundImages[currentSlide].src}
+                    alt={backgroundImages[currentSlide].alt}
+                    fill
+                    priority={true}
+                    className="object-cover object-center"
+                    sizes="100vw"
                     style={{
-                      left: particle.left,
-                      top: particle.top,
-                      width: i % 3 === 0 ? '2px' : '1px',
-                      height: i % 3 === 0 ? '2px' : '1px'
-                    }}
-                    animate={{
-                      opacity: [0, 0.8, 0],
-                      scale: [0, 1, 0],
-                      filter: ["blur(0px)", "blur(1px)", "blur(0px)"]
-                    }}
-                    transition={{
-                      duration: particle.duration,
-                      repeat: Infinity,
-                      delay: particle.delay,
-                      ease: "easeInOut",
+                      transform: `scale(${1 + scrollPosition * 0.0003}) translateY(${scrollPosition * 0.05}px)`
                     }}
                   />
-                ))}
+                </motion.div>
+              </motion.div>
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-b from-black/80 via-green-950/70 to-green-900/80 pointer-events-none"
+                initial={{ opacity: 0.5 }}
+                animate={{ opacity: 0.85 }}
+                transition={{ duration: 1 }}
+              ></motion.div>
+              
+              {/* Enhanced abstract shapes overlay with 3D perspective */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ perspective: '1000px' }}>
+                <motion.div 
+                  className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-green-500/20 blur-3xl"
+                  animate={{ 
+                    scale: [1, 1.05, 1],
+                    opacity: [0.2, 0.3, 0.2],
+                    rotateX: [0, 5, 0],
+                    rotateY: [0, 10, 0]
+                  }}
+                  transition={{ 
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                ></motion.div>
+                <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-black/40 to-transparent"></div>
+                <motion.div 
+                  className="absolute top-1/3 -left-24 w-64 h-64 rounded-full bg-yellow-500/10 blur-3xl"
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    opacity: [0.1, 0.2, 0.1],
+                    rotateX: [0, -5, 0],
+                    rotateY: [0, -10, 0]
+                  }}
+                  transition={{ 
+                    duration: 7,
+                    delay: 1,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                ></motion.div>
+                
+                {/* Enhanced particle effect */}
+                <div className="absolute inset-0">
+                  {particlesData.map((particle, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute rounded-full bg-white/40"
+                      style={{
+                        left: particle.left,
+                        top: particle.top,
+                        width: i % 3 === 0 ? '2px' : '1px',
+                        height: i % 3 === 0 ? '2px' : '1px'
+                      }}
+                      animate={{
+                        opacity: [0, 0.8, 0],
+                        scale: [0, 1, 0],
+                        filter: ["blur(0px)", "blur(1px)", "blur(0px)"]
+                      }}
+                      transition={{
+                        duration: particle.duration,
+                        repeat: Infinity,
+                        delay: particle.delay,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        )}
       </AnimatePresence>
       
       {/* Content overlay with animated text */}
-      <div className="absolute inset-0 z-20 flex flex-col justify-center">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="absolute inset-0 z-20 flex flex-col justify-center items-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <motion.div 
-            className="max-w-4xl space-y-8"
+            className="flex flex-col items-center text-center space-y-8"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={animate ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
             {/* Animated hero tag */}
             <AnimatePresence mode="wait">
-              <motion.div
-                key={`tag-${currentSlide}`}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                custom={0}
-                variants={textVariants}
-                style={{ pointerEvents: 'auto' }}
-              >
-                <div className="flex items-center space-x-2">
+              {animate && (
+                <motion.div
+                  key={`tag-${currentSlide}`}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  custom={0}
+                  variants={textVariants}
+                  className="flex items-center justify-center space-x-2"
+                  style={{ pointerEvents: 'auto' }}
+                >
                   <div className="flex items-center justify-center w-8 h-8 rounded-full bg-green-500/20 backdrop-blur-md">
                     <Leaf className="h-4 w-4 text-green-400" />
                   </div>
@@ -398,69 +420,73 @@ const Hero = () => {
                     <Star className="h-3 w-3 text-yellow-400 mr-1" />
                     <span className="text-xs font-medium text-green-200">Since 2022</span>
                   </motion.div>
-                </div>
-              </motion.div>
+                </motion.div>
+              )}
             </AnimatePresence>
             
             {/* Hero title with enhanced animated transitions */}
             <AnimatePresence mode="wait">
-              <motion.div 
-                key={`title-${currentSlide}`}
-                className="space-y-2"
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                custom={1}
-                variants={textVariants}
-              >
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight">
-                  {backgroundImages[currentSlide].title}{" "}
-                  <span className="relative inline-block">
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-green-500">
-                      {backgroundImages[currentSlide].titleHighlight}
-                    </span>
-                    <motion.span 
-                      className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-green-300 to-green-500 rounded-full"
-                      initial={{ width: 0, opacity: 0 }}
-                      animate={{ width: "100%", opacity: 1 }}
-                      transition={{ delay: 0.8, duration: 0.8 }}
-                    ></motion.span>
-                  </span>
-                </h1>
-                <motion.p 
-                  className="text-xl md:text-2xl font-medium text-green-200 leading-tight mt-2"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.9, duration: 0.5 }}
+              {animate && (
+                <motion.div 
+                  key={`title-${currentSlide}`}
+                  className="space-y-2 max-w-4xl mx-auto"
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  custom={1}
+                  variants={textVariants}
                 >
-                  {backgroundImages[currentSlide].subtitle}
-                </motion.p>
-              </motion.div>
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight">
+                    {backgroundImages[currentSlide].title}{" "}
+                    <span className="relative inline-block">
+                      <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-green-500">
+                        {backgroundImages[currentSlide].titleHighlight}
+                      </span>
+                      <motion.span 
+                        className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-green-300 to-green-500 rounded-full"
+                        initial={{ width: 0, opacity: 0 }}
+                        animate={{ width: "100%", opacity: 1 }}
+                        transition={{ delay: 0.8, duration: 0.8 }}
+                      ></motion.span>
+                    </span>
+                  </h1>
+                  <motion.p 
+                    className="text-xl md:text-2xl font-medium text-green-200 leading-tight mt-2"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.9, duration: 0.5 }}
+                  >
+                    {backgroundImages[currentSlide].subtitle}
+                  </motion.p>
+                </motion.div>
+              )}
             </AnimatePresence>
             
             {/* Hero description with enhanced animated transitions */}
             <AnimatePresence mode="wait">
-              <motion.div 
-                key={`desc-${currentSlide}`}
-                className="relative"
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                custom={2}
-                variants={textVariants}
-              >
-                <p className="text-lg md:text-xl text-white/90 max-w-2xl leading-relaxed font-medium">
-                  {backgroundImages[currentSlide].description}
-                </p>
-              </motion.div>
+              {animate && (
+                <motion.div 
+                  key={`desc-${currentSlide}`}
+                  className="relative max-w-2xl mx-auto"
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  custom={2}
+                  variants={textVariants}
+                >
+                  <p className="text-lg md:text-xl text-white/90 leading-relaxed font-medium">
+                    {backgroundImages[currentSlide].description}
+                  </p>
+                </motion.div>
+              )}
             </AnimatePresence>
             
             {/* Stats highlight with improved animation */}
             <motion.div
               variants={statsVariants}
               initial="hidden"
-              animate="visible"
-              className="flex flex-wrap gap-8 pt-2"
+              animate={animate ? "visible" : "hidden"}
+              className="flex flex-wrap justify-center gap-6 pt-6"
               style={{ pointerEvents: 'auto' }}
             >
               <motion.div 
@@ -492,66 +518,68 @@ const Hero = () => {
             </motion.div>
             
             {/* CTA buttons with enhanced animations */}
-            <motion.div 
-              className="flex flex-col sm:flex-row gap-5 pt-6 z-30"
-              initial="hidden"
-              animate="visible"
-              custom={4}
-              variants={textVariants}
-              style={{ pointerEvents: 'auto' }}
-            >
+            {animate && (
               <motion.div 
-                whileHover={{ scale: 1.03 }} 
-                whileTap={{ scale: 0.97 }} 
-                className="relative"
+                className="flex flex-col sm:flex-row gap-5 pt-8 justify-center z-30"
+                initial="hidden"
+                animate="visible"
+                custom={4}
+                variants={textVariants}
+                style={{ pointerEvents: 'auto' }}
               >
-                <Link
-                  href="#programs"
-                  className="inline-flex justify-center items-center px-7 py-4 rounded-full bg-gradient-to-r from-green-600 to-green-500 text-white font-semibold hover:shadow-lg hover:shadow-green-500/25 shadow-lg group"
-                >
-                  <span className="mr-2">Join Our Movement</span>
-                  <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                    <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
-                  </div>
-                </Link>
-                
-                {/* Enhanced button glow effect */}
                 <motion.div 
-                  className="absolute -inset-1 rounded-full blur-md bg-green-400/20 z-0"
-                  animate={{ 
-                    scale: [1, 1.05, 1],
-                    opacity: [0.3, 0.5, 0.3]
-                   }}
-                  transition={{ 
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatType: "reverse"
-                  }}
-                />
-              </motion.div>
-              
-              <motion.div 
-                whileHover={{ scale: 1.03 }} 
-                whileTap={{ scale: 0.97 }}
-              >
-                <Link
-                  href="#donate"
-                  className="inline-flex justify-center items-center px-7 py-4 rounded-full bg-white/15 backdrop-blur-md text-white border border-white/20 font-semibold transition-all hover:bg-white/20 hover:border-white/30 shadow-lg group"
+                  whileHover={{ scale: 1.03 }} 
+                  whileTap={{ scale: 0.97 }} 
+                  className="relative"
                 >
-                  <span className="mr-2">Support Our Cause</span>
-                  <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                    <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </div>
-                </Link>
+                  <Link
+                    href="#programs"
+                    className="inline-flex justify-center items-center px-7 py-4 rounded-full bg-gradient-to-r from-green-600 to-green-500 text-white font-semibold hover:shadow-lg hover:shadow-green-500/25 shadow-lg group"
+                  >
+                    <span className="mr-2">Join Our Movement</span>
+                    <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                      <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                  </Link>
+                  
+                  {/* Enhanced button glow effect */}
+                  <motion.div 
+                    className="absolute -inset-1 rounded-full blur-md bg-green-400/20 z-0"
+                    animate={{ 
+                      scale: [1, 1.05, 1],
+                      opacity: [0.3, 0.5, 0.3]
+                     }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      repeatType: "reverse"
+                    }}
+                  />
+                </motion.div>
+                
+                <motion.div 
+                  whileHover={{ scale: 1.03 }} 
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <Link
+                    href="#donate"
+                    className="inline-flex justify-center items-center px-7 py-4 rounded-full bg-white/15 backdrop-blur-md text-white border border-white/20 font-semibold transition-all hover:bg-white/20 hover:border-white/30 shadow-lg group"
+                  >
+                    <span className="mr-2">Support Our Cause</span>
+                    <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                      <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </div>
+                  </Link>
+                </motion.div>
               </motion.div>
-            </motion.div>
+            )}
           </motion.div>
         </div>
       </div>
       
       {/* Enhanced slide navigation with improved progress indicators */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-40 flex flex-col items-center space-y-4" style={{ pointerEvents: 'auto' }}>
-        <div className="flex space-x-4">
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-40 flex flex-col items-center space-y-2" style={{ pointerEvents: 'auto' }}>
+        <div className="flex space-x-3">
           {backgroundImages.map((_, index) => (
             <div key={index} className="relative cursor-pointer" onClick={() => {
               if (!isTransitioning) {
@@ -563,13 +591,13 @@ const Hero = () => {
                 }, 700);
               }
             }}>
-              <div className={`group flex flex-col items-center space-y-2 ${index === currentSlide ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}>
+              <div className={`group flex flex-col items-center space-y-1.5 ${index === currentSlide ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}>
                 <div className="relative">
                   <div 
-                    className={`h-2 rounded-full transition-all duration-300 ${
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
                       index === currentSlide 
-                        ? 'bg-green-400 w-10' 
-                        : 'bg-white/40 group-hover:bg-white/60 w-6'
+                        ? 'bg-green-400 w-8' 
+                        : 'bg-white/40 group-hover:bg-white/60 w-5'
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
                   />
@@ -577,7 +605,7 @@ const Hero = () => {
                   {/* Progress indicator for current slide */}
                   {index === currentSlide && (
                     <motion.div 
-                      className="absolute top-0 left-0 h-2 bg-white rounded-full"
+                      className="absolute top-0 left-0 h-1.5 bg-white rounded-full"
                       initial={{ width: 0 }}
                       animate={{ width: `${slideProgress}%` }}
                       style={{ maxWidth: "100%" }}
@@ -586,7 +614,7 @@ const Hero = () => {
                 </div>
                 
                 {/* Mini title for each slide */}
-                <span className={`text-xs font-medium transition-all duration-300 ${
+                <span className={`text-[10px] font-medium transition-all duration-300 ${
                   index === currentSlide ? 'text-white' : 'text-white/50 group-hover:text-white/70'
                 }`}>
                   {backgroundImages[index].titleHighlight}
@@ -596,11 +624,11 @@ const Hero = () => {
           ))}
         </div>
         
-        {/* Autoplay control */}
-        <div className="flex items-center space-x-2">
+        {/* Autoplay control - smaller version */}
+        <div className="flex items-center">
           <button 
             onClick={() => setAutoplayEnabled(!autoplayEnabled)}
-            className={`px-3 py-1 text-xs font-medium rounded-full border transition-all duration-300 ${
+            className={`px-2 py-0.5 text-[10px] font-medium rounded-full border transition-all duration-300 ${
               autoplayEnabled 
                 ? 'bg-green-500/20 text-green-300 border-green-500/30' 
                 : 'bg-white/10 text-white/70 border-white/20 hover:bg-white/20'
@@ -611,30 +639,37 @@ const Hero = () => {
         </div>
       </div>
       
-      {/* Enhanced arrow controls with 3D hover effect */}
-      <div className="absolute z-40 inset-y-0 w-full flex items-center justify-between px-4" style={{ pointerEvents: 'none' }}>
-        <motion.button 
-          onClick={prevSlide}
-          className="bg-black/20 backdrop-blur-md text-white rounded-full p-3 opacity-0 sm:opacity-50 transition-all duration-300 hover:bg-black/40 hover:opacity-100 border border-white/10"
-          aria-label="Previous slide"
-          whileHover={{ scale: 1.1, x: -2, boxShadow: "0 0 15px rgba(255,255,255,0.2)" }}
-          whileTap={{ scale: 0.95 }}
-          style={{ pointerEvents: 'auto' }}
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </motion.button>
-        
-        <motion.button 
-          onClick={nextSlide}
-          className="bg-black/20 backdrop-blur-md text-white rounded-full p-3 opacity-0 sm:opacity-50 transition-all duration-300 hover:bg-black/40 hover:opacity-100 border border-white/10"
-          aria-label="Next slide"
-          whileHover={{ scale: 1.1, x: 2, boxShadow: "0 0 15px rgba(255,255,255,0.2)" }}
-          whileTap={{ scale: 0.95 }}
-          style={{ pointerEvents: 'auto' }}
-        >
-          <ChevronRight className="w-6 h-6" />
-        </motion.button>
-      </div>
+      {/* Navigation controls with improved hover effects */}
+      {animate && (
+        <div className="absolute bottom-10 right-10 z-50 flex items-center space-x-2">
+          <motion.button
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.2 }}
+            onClick={prevSlide}
+            className="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 backdrop-blur-md text-white border border-white/10 hover:bg-white/20 transition-all duration-300"
+            aria-label="Previous slide"
+            style={{ pointerEvents: 'auto' }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </motion.button>
+          <motion.button
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.4 }}
+            onClick={nextSlide}
+            className="flex items-center justify-center w-12 h-12 rounded-full bg-green-600 text-white border border-green-500 hover:bg-green-500 transition-all duration-300"
+            aria-label="Next slide"
+            style={{ pointerEvents: 'auto' }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <ChevronRight className="w-5 h-5" />
+          </motion.button>
+        </div>
+      )}
     </section>
   );
 };

@@ -43,7 +43,7 @@ const News = () => {
       {
         id: 1,
         title: "Sanghachadwam Foundation Launches New Initiative with Banas Dairy",
-        date: "June 15, 2023",
+        date: "March 15, 2024",
         excerpt: "A new collaboration to promote natural farming practices across Gujarat aimed at improving soil health and increasing farmer incomes through sustainable practices.",
         category: "Partnerships",
         imageUrl: "/images/news/leftcard.jpg",
@@ -52,7 +52,7 @@ const News = () => {
       {
         id: 2,
         title: "1,000 New Farmers Join Our Skill Development Program",
-        date: "May 28, 2023",
+        date: "February 28, 2024",
         excerpt: "Our flagship program continues to grow with a new batch of rural youth learning modern agricultural techniques and entrepreneurship skills.",
         category: "Milestone",
         imageUrl: "/images/news/middlecard.jpg",
@@ -61,7 +61,7 @@ const News = () => {
       {
         id: 3,
         title: "Biochar Initiative Wins Environmental Excellence Award",
-        date: "April 12, 2023",
+        date: "January 12, 2024",
         excerpt: "Our carbon credit program using biochar technology has been recognized for its innovative approach to sustainable agriculture and climate action.",
         category: "Awards",
         imageUrl: "/images/news/rightcard.jpg",

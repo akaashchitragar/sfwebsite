@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import JsonLd from "./JsonLd";
+import Preloader from "@/components/Preloader";
+import { LoadingProvider } from "@/context/LoadingContext";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -86,11 +88,16 @@ export default function RootLayout({
         <JsonLd />
       </head>
       <body
-        className={`${inter.variable} ${poppins.variable} antialiased`}
+        className={`${inter.variable} ${poppins.variable} antialiased relative`}
       >
-        <Navbar />
-        {children}
-        <Footer />
+        <LoadingProvider>
+          <Preloader />
+          <div className="contents">
+            <Navbar />
+            {children}
+            <Footer />
+          </div>
+        </LoadingProvider>
       </body>
     </html>
   );

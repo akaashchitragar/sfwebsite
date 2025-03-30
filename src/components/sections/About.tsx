@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Play, Info, Leaf, GraduationCap, LightbulbIcon, FlaskConical, X, Award, Heart, Clock, TrendingUp, Building } from 'lucide-react';
 import SectionBadge from '../ui/SectionBadge';
+import { useLoading } from '@/context/LoadingContext';
 
 // Define a type for tab content
 type TabContent = {
@@ -39,6 +40,8 @@ const About = () => {
     yOffset: number;
     duration: number;
   }>>([]);
+  const { isLoading } = useLoading();
+  const [canAnimate, setCanAnimate] = useState(false);
 
   const handleVideoLoad = () => {
     setVideoLoaded(true);
@@ -87,6 +90,13 @@ const About = () => {
       document.body.style.overflow = 'auto';
     };
   }, []);
+
+  // Only enable animations after preloader is done
+  useEffect(() => {
+    if (!isLoading) {
+      setCanAnimate(true);
+    }
+  }, [isLoading]);
 
   // Animation variants
   const fadeIn = {
@@ -216,7 +226,7 @@ const About = () => {
           {/* Left column: Title and tabs */}
           <motion.div 
             initial="hidden"
-            animate={isVisible ? "visible" : "hidden"}
+            animate={canAnimate && isVisible ? "visible" : "hidden"}
             variants={fadeIn}
             className="space-y-7"
           >
@@ -283,7 +293,7 @@ const About = () => {
           {/* Right column: Image and video */}
           <motion.div 
             initial="hidden"
-            animate={isVisible ? "visible" : "hidden"}
+            animate={canAnimate && isVisible ? "visible" : "hidden"}
             variants={fadeIn}
             className="mt-12 lg:mt-0"
           >

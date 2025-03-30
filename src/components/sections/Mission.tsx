@@ -4,13 +4,16 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { Leaf, Goal, Users, GraduationCap, ChevronDown, Award, Heart, Zap, Shield, BarChart3, Flag, Target } from 'lucide-react';
+import { useLoading } from '@/context/LoadingContext';
 
 const Mission = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const { isLoading } = useLoading();
   
   const [activeValue, setActiveValue] = useState(0);
   const [floatingElements, setFloatingElements] = useState<Array<{top: string; left: string; size: number; duration: number; delay: number; rotate: number}>>([]);
+  const [canAnimate, setCanAnimate] = useState(false);
 
   // Generate floating elements on client side
   useEffect(() => {
@@ -25,6 +28,13 @@ const Mission = () => {
     
     setFloatingElements(elements);
   }, []);
+
+  // Only enable animations after preloader is done
+  useEffect(() => {
+    if (!isLoading) {
+      setCanAnimate(true);
+    }
+  }, [isLoading]);
 
   const coreValues = [
     {
@@ -203,7 +213,7 @@ const Mission = () => {
         <motion.div 
           className="lg:text-center max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={canAnimate && isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
         >
           <motion.span 
@@ -229,7 +239,7 @@ const Mission = () => {
         <motion.div 
           className="mt-20 max-w-6xl mx-auto"
           initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          animate={canAnimate && isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -298,7 +308,7 @@ const Mission = () => {
                   custom={0}
                   variants={fadeIn}
                   initial="hidden"
-                  animate={isInView ? "visible" : "hidden"}
+                  animate={canAnimate && isInView ? "visible" : "hidden"}
                   whileHover={{ 
                     y: -5,
                     boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
@@ -319,7 +329,7 @@ const Mission = () => {
                   custom={1}
                   variants={fadeIn}
                   initial="hidden"
-                  animate={isInView ? "visible" : "hidden"}
+                  animate={canAnimate && isInView ? "visible" : "hidden"}
                   whileHover={{ 
                     y: -5,
                     boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
@@ -340,7 +350,7 @@ const Mission = () => {
                   custom={2}
                   variants={fadeIn}
                   initial="hidden"
-                  animate={isInView ? "visible" : "hidden"}
+                  animate={canAnimate && isInView ? "visible" : "hidden"}
                   whileHover={{ 
                     y: -5,
                     boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
@@ -364,7 +374,7 @@ const Mission = () => {
         <motion.div 
           className="mt-24"
           initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          animate={canAnimate && isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <div className="text-center mb-12">
