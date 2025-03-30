@@ -67,7 +67,7 @@ const Footer = () => {
           </div>
           
           <div className="flex space-x-5 my-3">
-            {socialLinks.map((social, index) => (
+            {socialLinks.map((social) => (
               <motion.a 
                 key={social.name}
                 href={social.url} 

@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
-import { BookOpen, Users, Home, TrendingUp, ChevronLeft, ChevronRight, MapPin, Quote, Award, Star, BarChart3, TrendingDown, LineChart } from 'lucide-react';
+import { BookOpen, Users, Home, TrendingUp, ChevronLeft, ChevronRight, MapPin, Quote, Award, Star, BarChart3, TrendingDown, LineChart, Users2, LucideProps, Leaf, SparkleIcon } from 'lucide-react';
 
 const Impact = () => {
   const sectionRef = useRef(null);
@@ -131,28 +131,26 @@ const Impact = () => {
     setParticles(generateParticles());
   }, []);
 
+  // Animate counters on scroll into view
   useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      const [entry] = entries;
-      if (entry.isIntersecting && !animationTriggered.current) {
-        animationTriggered.current = true;
-        animateCounters();
-      }
-    }, options);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          animateCounters();
+        }
+      },
+      { threshold: 0.25 }
+    );
 
     if (countersRef.current) {
       observer.observe(countersRef.current);
     }
 
+    const currentRef = countersRef.current;
+
     return () => {
-      if (countersRef.current) {
-        observer.unobserve(countersRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);

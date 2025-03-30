@@ -182,13 +182,13 @@ export default function InvestmentDetails() {
               >
                 <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2 hidden lg:block">
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-green-800">
-                    Unlocking India's $200 Billion
+                    Unlocking India&apos;s $200 Billion
                   </span>
                   <div>Agri-Entrepreneurship Opportunity</div>
                 </h1>
                 <p className="text-lg text-gray-700 mb-4 font-semibold">(2025-2035)</p>
                 <p className="text-base text-gray-600 mb-6 leading-relaxed">
-                  India's agricultural transformation offers unprecedented investment opportunities with a growing population, increasing global demand for sustainable food production, and rapid technological advancements.
+                  India&apos;s agricultural transformation offers unprecedented investment opportunities with a growing population, increasing global demand for sustainable food production, and rapid technological advancements.
               </p>
               
               <div className="grid grid-cols-2 gap-4 mb-6">
@@ -319,7 +319,7 @@ export default function InvestmentDetails() {
                     <div className="md:col-span-2">
                       <h3 className="text-2xl font-bold text-gray-800 mb-3">Investment Opportunity Categories</h3>
                       <p className="text-gray-600 leading-relaxed">
-                        India's $200 billion agricultural investment landscape is divided into strategic categories, each addressing critical needs in the ecosystem. These sectors offer diverse entry points for investors depending on their focus, risk appetite, and impact goals.
+                        India&apos;s $200 billion agricultural investment landscape is divided into strategic categories, each addressing critical needs in the ecosystem. These sectors offer diverse entry points for investors depending on their focus, risk appetite, and impact goals.
                       </p>
                     </div>
                     <div className="hidden md:block">
@@ -535,7 +535,7 @@ export default function InvestmentDetails() {
                       <h2 className="text-3xl md:text-4xl font-bold mb-4">$200 Billion Opportunity</h2>
                       <div className="h-1 w-24 bg-green-500 rounded mb-6"></div>
                       <p className="text-green-100 leading-relaxed mb-6">
-                        India's agricultural sector represents one of the largest untapped investment landscapes globally, with opportunities spanning the entire value chain from farm inputs to consumer products.
+                        India&apos;s agricultural sector represents one of the largest untapped investment landscapes globally, with opportunities spanning the entire value chain from farm inputs to consumer products.
                       </p>
                       
                       <div className="grid grid-cols-2 gap-6">
@@ -638,7 +638,7 @@ export default function InvestmentDetails() {
                         
                         <div className="p-4 bg-green-50 rounded-lg border border-green-100">
                           <p className="text-gray-700 italic">
-                            "Strategic investments in agricultural finance can help unlock the immense potential of India's farming sector while delivering attractive financial returns."
+                            "Strategic investments in agricultural finance can help unlock the immense potential of India&apos;s farming sector while delivering attractive financial returns."
                           </p>
                         </div>
                       </div>
@@ -704,7 +704,7 @@ export default function InvestmentDetails() {
                     <div className="flex flex-col md:flex-row justify-between md:items-end mb-8 pb-6 border-b border-gray-100">
                       <div className="mb-4 md:mb-0">
                         <h3 className="text-2xl font-bold text-gray-900 mb-2">Key Opportunity Drivers</h3>
-                        <p className="text-gray-500">Critical factors shaping India's agricultural investment landscape</p>
+                        <p className="text-gray-500">Critical factors shaping India&apos;s agricultural investment landscape</p>
                       </div>
                       <div className="inline-flex items-center text-sm text-gray-500 bg-gray-50 px-4 py-2 rounded-full">
                         <CheckCircle2 className="h-4 w-4 text-green-500 mr-2" />
@@ -726,7 +726,7 @@ export default function InvestmentDetails() {
                           <CheckCircle2 className="h-5 w-5 text-blue-600 mr-2" />
                           <h4 className="font-semibold text-blue-900">Policy Support</h4>
                         </div>
-                        <p className="text-gray-600 text-sm">Government initiatives like the Double Farmers' Income program create a favorable policy environment for agricultural investments.</p>
+                        <p className="text-gray-600 text-sm">Government initiatives like the Double Farmers&apos; Income program create a favorable policy environment for agricultural investments.</p>
                       </div>
                       
                       <div className="p-5 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100/50 border border-purple-100">
@@ -784,7 +784,7 @@ export default function InvestmentDetails() {
                   <div className="text-center mb-10">
                     <h3 className="text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-amber-700 to-amber-500 inline-block">Critical Market Inflection Points</h3>
                     <p className="text-gray-600 max-w-3xl mx-auto">
-                      Several converging factors are creating unprecedented momentum in India's agricultural investment landscape
+                      Several converging factors are creating unprecedented momentum in India&apos;s agricultural investment landscape
                     </p>
                   </div>
                   

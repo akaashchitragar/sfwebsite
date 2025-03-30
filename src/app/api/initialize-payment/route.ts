@@ -40,7 +40,6 @@ export async function POST(request: NextRequest) {
     const saltIndex = process.env.PHONEPE_SALT_INDEX || '1'; // Replace with actual salt index
     
     const dataForHash = payloadBase64 + saltKey;
-    const checksum = crypto.createHash('sha256').update(dataForHash).digest('hex') + '###' + saltIndex;
     
     // 4. Make API call to PhonePe
     // In a real implementation, you'd make an actual HTTP request to PhonePe's API
@@ -48,15 +47,14 @@ export async function POST(request: NextRequest) {
     
     // Store transaction details in your database for verification later
     
-    // Return a mock payment URL
-    // In a real implementation, this would come from PhonePe's response
-    const paymentUrl = `https://pay.phonepe.com/pay/mock?transactionId=${transactionId}`;
+    // Create order in your database with status 'pending'
     
-    // Return the payment URL to the client
+    // Form the response
     return NextResponse.json({
       success: true,
-      paymentUrl,
-      transactionId,
+      orderId: transactionId,
+      amount: amount,
+      redirectUrl: `${process.env.NEXT_PUBLIC_APP_URL}/donate?order_id=${transactionId}`
     });
     
   } catch (error) {

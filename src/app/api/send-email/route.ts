@@ -274,12 +274,12 @@ export async function POST(request: NextRequest) {
     // More detailed error response
     let errorMessage = 'Failed to send email';
     
-    // @ts-ignore
+    // @ts-expect-error Error response structure from SendGrid
     if (error && error.response && error.response.body) {
       try {
-        // @ts-ignore
+        // @ts-expect-error Error response structure from SendGrid
         console.error('SendGrid API response:', JSON.stringify(error.response.body));
-        // @ts-ignore
+        // @ts-expect-error Error response structure from SendGrid
         errorMessage = `SendGrid Error: ${JSON.stringify(error.response.body)}`;
       } catch (e) {
         console.error('Error parsing SendGrid response:', e);

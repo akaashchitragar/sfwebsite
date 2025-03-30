@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
@@ -17,6 +17,10 @@ const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  themeColor: "#16a34a",
+};
 
 export const metadata: Metadata = {
   title: "Sanghachadwam Foundation - Transforming Agriculture Into A First-Choice Profession",
@@ -74,7 +78,6 @@ export const metadata: Metadata = {
     ],
   },
   manifest: "/manifest.json",
-  themeColor: "#16a34a",
 };
 
 export default function RootLayout({
