@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M48 12C48 12 12 48 12 60C12 72 24 84 48 84C72 84 84 72 84 60C84 48 48 12 48 12Z" fill="#4CAF50" fill-opacity="0.2"/>
+  <path d="M48 18C48 18 18 48 18 60C18 70 30 78 48 78C66 78 78 70 78 60C78 48 48 18 48 18Z" fill="#66BB6A" fill-opacity="0.3"/>
+  <path d="M48 12C48 12 48 38 48 48M48 48C48 48 38 38 30 36M48 48C48 48 58 38 66 36" stroke="#388E3C" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M48 20C48 20 40 40 40 50M48 20C48 20 56 40 56 50" stroke="#388E3C" stroke-width="1" stroke-linecap="round" stroke-dasharray="2 2"/>
+</svg> 
