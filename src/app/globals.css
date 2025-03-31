@@ -66,3 +66,25 @@ body {
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
 }
+
+/* Fixed logo watermark styles */
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+}
+
+.fixed-logo-watermark {
+  animation: appear 1.5s ease-out forwards;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.08));
+  background-color: white;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(22, 163, 74, 0.15);
+  min-width: 200px;
+}

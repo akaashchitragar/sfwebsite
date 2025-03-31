@@ -392,7 +392,7 @@ const Hero = () => {
             animate={animate ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {/* Animated hero tag */}
+            {/* Animated hero tag - removing entire section with leaf */}
             <AnimatePresence mode="wait">
               {animate && (
                 <motion.div
@@ -405,21 +405,7 @@ const Hero = () => {
                   className="flex items-center justify-center space-x-2"
                   style={{ pointerEvents: 'auto' }}
                 >
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-green-500/20 backdrop-blur-md">
-                    <Leaf className="h-4 w-4 text-green-400" />
-                  </div>
-                  <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-white text-sm font-medium tracking-wider shadow-sm border border-white/10">
-                    Sanghachadwam Foundation
-                  </span>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.3, duration: 0.5 }}
-                    className="flex items-center bg-green-600/20 backdrop-blur-md rounded-full px-2 py-0.5 border border-green-500/20"
-                  >
-                    <Star className="h-3 w-3 text-yellow-400 mr-1" />
-                    <span className="text-xs font-medium text-green-200">Since 2022</span>
-                  </motion.div>
+                  {/* Empty div - all content removed */}
                 </motion.div>
               )}
             </AnimatePresence>
