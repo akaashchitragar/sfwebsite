@@ -6,7 +6,6 @@ import Footer from "@/components/layout/Footer";
 import JsonLd from "./JsonLd";
 import Preloader from "@/components/Preloader";
 import { LoadingProvider } from "@/context/LoadingContext";
-import FixedLogo from "@/components/FixedLogo";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -96,7 +95,6 @@ export default function RootLayout({
       >
         <LoadingProvider>
           <Preloader />
-          <FixedLogo />
           <div className="contents">
             <Navbar />
             {children}
