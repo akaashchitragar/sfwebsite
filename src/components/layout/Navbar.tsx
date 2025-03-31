@@ -34,13 +34,18 @@ const Navbar = () => {
   }, [scrolled]);
 
   const navItems = [
+    { name: 'Home', href: '/' },
     { name: 'About', href: '#about' },
-    { name: 'Mission', href: '#mission' },
     { name: 'Programs', href: '#programs' },
     { name: 'Impact', href: '#impact' },
-    { name: 'Resources', href: '#resources' },
     { name: 'News', href: '#news' },
     { name: 'Contact', href: '#contact' },
+  ];
+
+  const legalItems = [
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Terms', href: '/terms' },
+    { name: 'Refund Policy', href: '/refund' },
   ];
 
   const navItemVariants = {
@@ -187,7 +192,7 @@ const Navbar = () => {
                   className="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-sm transition-colors"
                 >
                   <Heart className="h-4 w-4 mr-1.5" />
-                  Join Our Movement
+                  Join Us
                 </Link>
               </motion.div>
             ) : (
@@ -199,7 +204,7 @@ const Navbar = () => {
                   className="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-sm transition-colors"
                 >
                   <Heart className="h-4 w-4 mr-1.5" />
-                  Join Our Movement
+                  Join Us
                 </Link>
               </div>
             )}
@@ -261,6 +266,24 @@ const Navbar = () => {
                     </Link>
                   </motion.div>
                 ))}
+                
+                <div className="pt-2 mt-2 border-t border-gray-100">
+                  {legalItems.map((item) => (
+                    <motion.div
+                      key={item.name}
+                      variants={mobileNavItemVariants}
+                    >
+                      <Link 
+                        href={item.href} 
+                        className="block px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-green-600 hover:bg-green-50 transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+                
                 <motion.div
                   variants={mobileNavItemVariants}
                 >
@@ -272,7 +295,7 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     <Heart className="h-4 w-4 mr-2" />
-                    Join Our Movement
+                    Join Us
                   </Link>
                 </motion.div>
               </div>

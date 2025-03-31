@@ -627,7 +627,7 @@ const Hero = () => {
       
       {/* Navigation controls with improved hover effects */}
       {animate && (
-        <div className="absolute bottom-10 right-10 z-50 flex items-center space-x-2">
+        <div className="absolute bottom-10 right-10 z-20 flex items-center space-x-2">
           <motion.button
             initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
